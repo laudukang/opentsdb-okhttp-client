@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Query {
-	
+
     private long start;
     private long end;
     private List<SubQueries> queries = new ArrayList<SubQueries>();

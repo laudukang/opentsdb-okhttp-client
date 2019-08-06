@@ -10,8 +10,8 @@ import okhttp3.Response;
 
 public interface HttpClient extends Client {
 
-	public Response pushMetrics(MetricBuilder builder, ExpectResponse expectResponse) throws IOException;
+    public Response pushMetrics(MetricBuilder builder, ExpectResponse expectResponse) throws IOException;
 
-	public Response pushQueries(QueryBuilder builder, ExpectResponse expectResponse) throws IOException;
+    public Response pushQueries(QueryBuilder builder, ExpectResponse expectResponse) throws IOException;
 
 }

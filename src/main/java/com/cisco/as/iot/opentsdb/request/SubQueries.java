@@ -51,7 +51,7 @@ public class SubQueries {
         return this;
     }
 
-    public SubQueries addFilter(Filter filter){
+    public SubQueries addFilter(Filter filter) {
         this.filters.add(filter);
         return this;
     }
