@@ -4,7 +4,8 @@ package com.cisco.as.iot.opentsdb.utils;
  * Created by shifeng on 2016/5/19.
  * MyProject
  */
-public enum Aggregator {
+public enum AggregatorEnum {
+
     avg,
     count,
     dev,

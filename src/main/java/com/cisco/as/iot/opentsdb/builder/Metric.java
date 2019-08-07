@@ -2,18 +2,18 @@ package com.cisco.as.iot.opentsdb.builder;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static com.cisco.as.iot.opentsdb.utils.Preconditions.checkNotNullOrEmpty;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Metric {
 
     // 监控指标项
-    @JSONField(name = "")
+    @JSONField(name = "metric")
     private String name;
 
     // 时间戳 [生成时间]
@@ -25,8 +25,11 @@ public class Metric {
     // 标签kv项
     private Map<String, String> tags = Maps.newConcurrentMap();
 
-    protected Metric(String name) {
-        this.name = checkNotNullOrEmpty(name);
+    Metric(String name) {
+        if (StringUtils.isBlank(name)) {
+            throw new IllegalArgumentException("empty metric name");
+        }
+        this.name = name;
     }
 
     /**
@@ -37,8 +40,9 @@ public class Metric {
      * @return the metric the tag was added to
      */
     public Metric addTag(String name, String value) {
-        checkNotNullOrEmpty(name);
-        checkNotNullOrEmpty(value);
+        if (StringUtils.isAnyBlank(name, value)) {
+            throw new IllegalArgumentException("empty tag name or value");
+        }
         tags.put(name, value);
         return this;
     }
@@ -62,7 +66,7 @@ public class Metric {
      * @param value     the measurement value
      * @return the metric
      */
-    protected Metric innerAddDataPoint(long timestamp, Object value) {
+    private Metric innerAddDataPoint(long timestamp, Object value) {
         checkArgument(timestamp > 0);
         this.timestamp = timestamp;
         this.value = checkNotNull(value);
@@ -117,7 +121,7 @@ public class Metric {
         return value;
     }
 
-    public String stringValue() throws DataFormatException {
+    public String stringValue()  {
         return value.toString();
     }
 

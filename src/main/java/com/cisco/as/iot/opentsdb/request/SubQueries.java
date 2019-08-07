@@ -1,5 +1,7 @@
 package com.cisco.as.iot.opentsdb.request;
 
+import com.cisco.as.iot.opentsdb.utils.AggregatorEnum;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,15 +12,15 @@ import java.util.Map;
  * MyProject
  */
 public class SubQueries {
-    private String aggregator;
+    private AggregatorEnum aggregator;
     private String metric;
     private Boolean rate = false;
     private Map<String, String> rateOptions;
     private String downsample;
-    private Map<String, String> tags = new HashMap<String, String>();
-    private List<Filter> filters = new ArrayList<Filter>();
+    private Map<String, String> tags = new HashMap<>();
+    private List<Filter> filters = new ArrayList<>();
 
-    public SubQueries addAggregator(String aggregator) {
+    public SubQueries addAggregator(AggregatorEnum aggregator) {
         this.aggregator = aggregator;
         return this;
     }
@@ -56,11 +58,11 @@ public class SubQueries {
         return this;
     }
 
-    public String getAggregator() {
+    public AggregatorEnum getAggregator() {
         return aggregator;
     }
 
-    public void setAggregator(String aggregator) {
+    public void setAggregator(AggregatorEnum aggregator) {
         this.aggregator = aggregator;
     }
 

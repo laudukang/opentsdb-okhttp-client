@@ -1,20 +1,22 @@
 package com.cisco.as.iot.opentsdb.request;
 
+import com.cisco.as.iot.opentsdb.utils.FilterTypeEnum;
+
 /**
  * Created by shifeng on 2016/5/19.
  * MyProject
  */
 public class Filter {
-    private String type;
+    private FilterTypeEnum type;
     private String tagk;
     private String filter;
     private Boolean groupBy = false;
 
-    public String getType() {
+    public FilterTypeEnum getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(FilterTypeEnum type) {
         this.type = type;
     }
 

@@ -15,10 +15,10 @@
  */
 package com.cisco.as.iot.opentsdb.builder;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -63,18 +63,11 @@ public class MetricBuilder {
         return metrics;
     }
 
-    /**
-     * Returns the JSON string built by the builder. This is the JSON that can be
-     * used by the client add metrics.
-     *
-     * @return JSON
-     * @throws IOException if metrics cannot be converted to JSON
-     */
-    public String build() throws IOException {
+    public String build() {
         for (Metric metric : metrics) {
             // verify that there is at least one tag for each metric
             checkState(metric.getTags().size() > 0, metric.getName() + " must contain at least one tag.");
         }
-        return JSONObject.toJSONString(metrics);
+        return JSON.toJSONString(metrics, SerializerFeature.IgnoreNonFieldGetter);
     }
 }
