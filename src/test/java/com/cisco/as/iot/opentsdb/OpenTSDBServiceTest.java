@@ -8,7 +8,6 @@ import com.cisco.as.iot.opentsdb.request.QueryBuilder;
 import com.cisco.as.iot.opentsdb.request.SubQueries;
 import com.cisco.as.iot.opentsdb.response.ExpectResponse;
 import com.cisco.as.iot.opentsdb.service.OpenTSDBService;
-import com.cisco.as.iot.opentsdb.service.impl.OpenTSDBServiceImpl;
 import com.cisco.as.iot.opentsdb.utils.AggregatorEnum;
 import com.cisco.as.iot.opentsdb.utils.FilterTypeEnum;
 import org.junit.Before;
@@ -23,7 +22,8 @@ public class OpenTSDBServiceTest {
     @Before
     public void init() {
         String openTSDBServer = "http://n2:4242";
-        openTSDBService = new OpenTSDBServiceImpl(openTSDBServer);
+
+        openTSDBService = () -> openTSDBServer;
     }
 
     @Test
