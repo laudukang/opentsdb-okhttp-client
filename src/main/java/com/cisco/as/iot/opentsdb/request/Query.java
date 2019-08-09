@@ -13,13 +13,14 @@ public class Query {
     private Object start;
     private long end;
     private List<SubQueries> queries = new ArrayList<>();
-    private Boolean noAnnotations = false;
-    private Boolean globalAnnotations = false;
-    private Boolean msResolution = false;
-    private Boolean showTSUIDs = false;
-    private Boolean showSummary = false;
-    private Boolean showQuery = false;
-    private Boolean delete = false;
+    private Boolean noAnnotations = Boolean.FALSE;
+    private Boolean globalAnnotations = Boolean.FALSE;
+    private Boolean msResolution = Boolean.FALSE;
+    private Boolean showTSUIDs = Boolean.FALSE;
+    private Boolean showSummary = Boolean.FALSE;
+    private Boolean showQuery = Boolean.FALSE;
+    private Boolean showStats = Boolean.FALSE;
+    private Boolean delete = Boolean.FALSE;
 
     public Query() {
     }
@@ -41,6 +42,46 @@ public class Query {
 
     public Query addEnd(long end) {
         this.end = end;
+        return this;
+    }
+
+    public Query noAnnotations() {
+        this.noAnnotations = Boolean.TRUE;
+        return this;
+    }
+
+    public Query globalAnnotations() {
+        this.globalAnnotations = Boolean.TRUE;
+        return this;
+    }
+
+    public Query msResolution() {
+        this.msResolution = Boolean.TRUE;
+        return this;
+    }
+
+    public Query showTSUIDs() {
+        this.showTSUIDs = Boolean.TRUE;
+        return this;
+    }
+
+    public Query showQuery() {
+        this.showQuery = Boolean.TRUE;
+        return this;
+    }
+
+    public Query showSummary() {
+        this.showSummary = Boolean.TRUE;
+        return this;
+    }
+
+    public Query showStats() {
+        this.showStats = Boolean.TRUE;
+        return this;
+    }
+
+    public Query delete() {
+        this.delete = Boolean.TRUE;
         return this;
     }
 
@@ -114,6 +155,14 @@ public class Query {
 
     public void setShowQuery(Boolean showQuery) {
         this.showQuery = showQuery;
+    }
+
+    public Boolean getShowStats() {
+        return showStats;
+    }
+
+    public void setShowStats(Boolean showStats) {
+        this.showStats = showStats;
     }
 
     public Boolean getDelete() {

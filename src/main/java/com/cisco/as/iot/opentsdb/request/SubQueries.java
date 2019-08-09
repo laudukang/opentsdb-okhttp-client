@@ -13,7 +13,9 @@ import java.util.Map;
 public class SubQueries {
     private AggregatorEnum aggregator;
     private String metric;
-    private Boolean rate = false;
+    private Boolean rate = Boolean.FALSE;
+    private Boolean explicitTags = Boolean.FALSE;
+    private Boolean useMultiGets = Boolean.FALSE;
     private Map<String, String> rateOptions;
     private String downsample;
     private List<Filter> filters = new ArrayList<>();
@@ -43,6 +45,21 @@ public class SubQueries {
         return this;
     }
 
+    public SubQueries rate() {
+        this.rate = Boolean.TRUE;
+        return this;
+    }
+
+    public SubQueries explicitTags() {
+        this.explicitTags = Boolean.TRUE;
+        return this;
+    }
+
+    public SubQueries useMultiGets() {
+        this.useMultiGets = Boolean.TRUE;
+        return this;
+    }
+
     public AggregatorEnum getAggregator() {
         return aggregator;
     }
@@ -65,6 +82,22 @@ public class SubQueries {
 
     public void setRate(Boolean rate) {
         this.rate = rate;
+    }
+
+    public Boolean getExplicitTags() {
+        return explicitTags;
+    }
+
+    public void setExplicitTags(Boolean explicitTags) {
+        this.explicitTags = explicitTags;
+    }
+
+    public Boolean getUseMultiGets() {
+        return useMultiGets;
+    }
+
+    public void setUseMultiGets(Boolean useMultiGets) {
+        this.useMultiGets = useMultiGets;
     }
 
     public Map<String, String> getRateOptions() {
