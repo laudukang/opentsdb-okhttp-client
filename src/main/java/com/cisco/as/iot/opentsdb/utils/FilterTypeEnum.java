@@ -10,9 +10,9 @@ package com.cisco.as.iot.opentsdb.utils;
  */
 public enum FilterTypeEnum {
 
-    literal_or,         //   精确匹配多项迭代值，多项迭代值以'|'分隔，大小写敏感
-    ilteral_or,         //   精确匹配多项迭代值，多项迭代值以'|'分隔，忽略大小写
-    not_literal_or,     //   通配符取非匹配，大小写敏感
+    literal_or,         //  精确匹配多项迭代值，多项迭代值以'|'分隔，大小写敏感
+    ilteral_or,         //  精确匹配多项迭代值，多项迭代值以'|'分隔，忽略大小写
+    not_literal_or,     //  通配符取非匹配，大小写敏感
     not_iliteral_or,    //  通配符取非匹配，忽略大小写
     wildcard,           //  通配符匹配，大小写敏感
     iwildcard,          //  通配符匹配，忽略大小写
