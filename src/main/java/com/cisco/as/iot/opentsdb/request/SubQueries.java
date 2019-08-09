@@ -58,6 +58,11 @@ public class SubQueries {
         return this;
     }
 
+    public SubQueries addFilter(List<Filter> filters) {
+        this.filters.addAll(filters);
+        return this;
+    }
+
     public AggregatorEnum getAggregator() {
         return aggregator;
     }
