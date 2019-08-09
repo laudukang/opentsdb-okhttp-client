@@ -1,7 +1,5 @@
 package com.cisco.as.iot.opentsdb.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.cisco.as.iot.opentsdb.builder.MetricBuilder;
 import com.cisco.as.iot.opentsdb.http.OkHttpUtil;
 import com.cisco.as.iot.opentsdb.request.QueryBuilder;
@@ -44,22 +42,22 @@ public interface OpenTSDBService {
         return urlBuilder.toString();
     }
 
-    default JSONObject pushMetrics(MetricBuilder builder, ExpectResponse expectResponse) {
+    default String pushMetrics(MetricBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
-        return OkHttpUtil.bodyPost(url).body(body).callForObject(JSONObject.class);
+        return OkHttpUtil.bodyPost(url).body(body).callForString();
     }
 
-    default JSONArray pushQueries(QueryBuilder builder, ExpectResponse expectResponse) {
+    default String pushQueries(QueryBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
         String url = buildUrl(this.getOpenTSDBServer(), QUERY_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
-        return OkHttpUtil.bodyPost(url).body(body).callForObject(JSONArray.class);
+        return OkHttpUtil.bodyPost(url).body(body).callForString();
     }
 
     default void asyncPushMetrics(MetricBuilder builder, ExpectResponse expectResponse, Callback callback) {

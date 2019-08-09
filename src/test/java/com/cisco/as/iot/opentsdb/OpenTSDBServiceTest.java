@@ -1,7 +1,5 @@
 package com.cisco.as.iot.opentsdb;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.cisco.as.iot.opentsdb.builder.MetricBuilder;
 import com.cisco.as.iot.opentsdb.request.Filter;
 import com.cisco.as.iot.opentsdb.request.QueryBuilder;
@@ -30,9 +28,9 @@ public class OpenTSDBServiceTest {
     public void testPushMetrics() {
         MetricBuilder builder = MetricBuilder.getInstance();
         builder.addMetric("metric1").setDataPoint(40).addTag("tag1", "tag1v");
-        JSONObject jsonObject = openTSDBService.pushMetrics(builder, ExpectResponse.SUMMARY);
 
-        System.out.println(jsonObject);
+        String response = openTSDBService.pushMetrics(builder, ExpectResponse.SUMMARY);
+        System.out.println(response);
     }
 
     @Test
@@ -50,8 +48,7 @@ public class OpenTSDBServiceTest {
         long now = new Date().getTime() / 1000;
         builder.getQuery().addStart(1546534700).addEnd(now).addSubQuery(subQueries);
 
-        JSONArray jsonArray = openTSDBService.pushQueries(builder, ExpectResponse.SUMMARY);
-
-        System.out.println(jsonArray);
+        String response = openTSDBService.pushQueries(builder, ExpectResponse.SUMMARY);
+        System.out.println(response);
     }
 }
