@@ -3,6 +3,8 @@ package com.cisco.as.iot.opentsdb.request;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
+import java.util.Objects;
+
 import static com.google.common.base.Preconditions.checkState;
 
 public class QueryBuilder {
@@ -22,7 +24,8 @@ public class QueryBuilder {
 
     public String build() {
         // verify that there is at least one tag for each metric
-        checkState(query.getStart() > 0, " must contain start.");
+
+        checkState(Objects.nonNull(query.getStart()), " must contain start.");
         checkState(query.getQueries() != null, " must contain at least one subQuery.");
 
         return JSON.toJSONString(query, SerializerFeature.IgnoreNonFieldGetter);

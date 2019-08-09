@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Query {
 
-    private long start;
+    private Object start;
     private long end;
-    private List<SubQueries> queries = new ArrayList<SubQueries>();
+    private List<SubQueries> queries = new ArrayList<>();
     private Boolean noAnnotations = false;
     private Boolean globalAnnotations = false;
     private Boolean msResolution = false;
@@ -22,10 +22,6 @@ public class Query {
     private Boolean delete = false;
 
     public Query() {
-    }
-
-    public Query(long start) {
-        this.start = start;
     }
 
     public Query addSubQuery(SubQueries subQueries) {
@@ -38,16 +34,21 @@ public class Query {
         return this;
     }
 
+    public Query addStart(String start) {
+        this.start = start;
+        return this;
+    }
+
     public Query addEnd(long end) {
         this.end = end;
         return this;
     }
 
-    public long getStart() {
+    public Object getStart() {
         return start;
     }
 
-    public void setStart(long start) {
+    public void setStart(Object start) {
         this.start = start;
     }
 

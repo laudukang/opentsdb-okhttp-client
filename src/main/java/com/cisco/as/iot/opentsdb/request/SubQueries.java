@@ -3,7 +3,6 @@ package com.cisco.as.iot.opentsdb.request;
 import com.cisco.as.iot.opentsdb.utils.AggregatorEnum;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,6 @@ public class SubQueries {
     private Boolean rate = false;
     private Map<String, String> rateOptions;
     private String downsample;
-    private Map<String, String> tags = new HashMap<>();
     private List<Filter> filters = new ArrayList<>();
 
     public SubQueries addAggregator(AggregatorEnum aggregator) {
@@ -32,24 +30,6 @@ public class SubQueries {
 
     public SubQueries addDownsample(String downsample) {
         this.downsample = downsample;
-        return this;
-    }
-
-    /**
-     * Tags are converted to filters in 2.2
-     */
-    @Deprecated
-    public SubQueries addTag(Map<String, String> tag) {
-        this.tags.putAll(tag);
-        return this;
-    }
-
-    /**
-     * Tags are converted to filters in 2.2
-     */
-    @Deprecated
-    public SubQueries addTag(String tag, String value) {
-        this.tags.put(tag, value);
         return this;
     }
 
@@ -101,18 +81,6 @@ public class SubQueries {
 
     public void setDownsample(String downsample) {
         this.downsample = downsample;
-    }
-
-    public Map<String, String> getTags() {
-        return tags;
-    }
-
-    /**
-     * Tags are converted to filters in 2.2
-     */
-    @Deprecated
-    public void setTags(Map<String, String> tags) {
-        this.tags = tags;
     }
 
     public List<Filter> getFilters() {
