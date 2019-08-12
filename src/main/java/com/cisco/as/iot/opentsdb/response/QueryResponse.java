@@ -70,6 +70,7 @@ public class QueryResponse {
         private List<String> tsuids;
         private Map<String, String> tags;
         private Map<String, Long> dps;
+        private Map<String, Long> stats;
         private List<Map<String, Long>> annotations;
         private List<Map<String, Long>> globalAnnotations;
         private String query;
@@ -112,6 +113,14 @@ public class QueryResponse {
 
         public void setDps(Map<String, Long> dps) {
             this.dps = dps;
+        }
+
+        public Map<String, Long> getStats() {
+            return stats;
+        }
+
+        public void setStats(Map<String, Long> stats) {
+            this.stats = stats;
         }
 
         public List<Map<String, Long>> getAnnotations() {
