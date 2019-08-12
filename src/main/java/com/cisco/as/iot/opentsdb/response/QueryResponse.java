@@ -1,5 +1,7 @@
 package com.cisco.as.iot.opentsdb.response;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,11 @@ public class QueryResponse {
 
     public void setStatsSummary(String statsSummary) {
         this.statsSummary = statsSummary;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 
     public static class MetricData {
