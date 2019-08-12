@@ -45,7 +45,7 @@ public interface OpenTSDBService {
         return urlBuilder.toString();
     }
 
-    default String pushMetrics(DataPointBuilder builder, ExpectResponse expectResponse) {
+    default String pushDataPointsString(DataPointBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
@@ -72,7 +72,8 @@ public interface OpenTSDBService {
         OkHttpUtil.bodyPost(url).body(body).callback(callback);
     }
 
-    default QueryResponse parseResult(String responseStr) {
+    default QueryResponse pushDataPoints(DataPointBuilder builder, ExpectResponse expectResponse) {
+        String responseStr = pushDataPointsString(builder, expectResponse);
         QueryResponse queryResponse = new QueryResponse();
         try {
             JSONArray jsonArray = JSONArray.parseArray(responseStr);

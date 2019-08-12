@@ -29,7 +29,7 @@ public class OpenTSDBServiceTest {
         DataPointBuilder builder = DataPointBuilder.getInstance();
         builder.addMetric("metric1").value(40).addTag("tag1", "tag1v");
 
-        String response = openTSDBService.pushMetrics(builder, ExpectResponse.SUMMARY);
+        String response = openTSDBService.pushDataPointsString(builder, ExpectResponse.SUMMARY);
         System.out.println(response);
     }
 
