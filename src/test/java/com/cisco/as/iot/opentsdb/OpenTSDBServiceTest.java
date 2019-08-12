@@ -48,7 +48,7 @@ public class OpenTSDBServiceTest {
         long now = new Date().getTime() / 1000;
         builder.getQuery().addStart(1546534700).addEnd(now).addSubQuery(subQueries);
 
-        String response = openTSDBService.pushQueries(builder, ExpectResponse.SUMMARY);
+        String response = openTSDBService.pushQueriesString(builder, ExpectResponse.SUMMARY);
         System.out.println(response);
     }
 }
