@@ -19,6 +19,10 @@ public class QueryResponse {
     private List<MetricData> metricDatas = new ArrayList<>();
     private String statsSummary;
 
+    public boolean hasError() {
+        return code != 0;
+    }
+
     public QueryResponse addMetricData(MetricData metricData) {
         this.metricDatas.add(metricData);
         return this;
