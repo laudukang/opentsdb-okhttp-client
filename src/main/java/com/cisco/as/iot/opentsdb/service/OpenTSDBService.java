@@ -63,7 +63,7 @@ public interface OpenTSDBService {
         return OkHttpUtil.bodyPost(url).body(body).callForString();
     }
 
-    default void asyncPushMetrics(DataPointBuilder builder, ExpectResponse expectResponse, Callback callback) {
+    default void asyncPushDataPoints(DataPointBuilder builder, ExpectResponse expectResponse, Callback callback) {
         checkNotNull(builder);
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
