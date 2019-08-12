@@ -1,9 +1,12 @@
 package com.cisco.as.iot.opentsdb.service;
 
-import com.cisco.as.iot.opentsdb.builder.MetricBuilder;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.cisco.as.iot.opentsdb.builder.DataPointBuilder;
 import com.cisco.as.iot.opentsdb.http.OkHttpUtil;
 import com.cisco.as.iot.opentsdb.request.QueryBuilder;
 import com.cisco.as.iot.opentsdb.response.ExpectResponse;
+import com.cisco.as.iot.opentsdb.response.QueryResponse;
 import okhttp3.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +45,7 @@ public interface OpenTSDBService {
         return urlBuilder.toString();
     }
 
-    default String pushMetrics(MetricBuilder builder, ExpectResponse expectResponse) {
+    default String pushMetrics(DataPointBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
@@ -60,12 +63,38 @@ public interface OpenTSDBService {
         return OkHttpUtil.bodyPost(url).body(body).callForString();
     }
 
-    default void asyncPushMetrics(MetricBuilder builder, ExpectResponse expectResponse, Callback callback) {
+    default void asyncPushMetrics(DataPointBuilder builder, ExpectResponse expectResponse, Callback callback) {
         checkNotNull(builder);
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
         OkHttpUtil.bodyPost(url).body(body).callback(callback);
+    }
+
+    default QueryResponse parseResult(String responseStr) {
+        QueryResponse queryResponse = new QueryResponse();
+        try {
+            JSONArray jsonArray = JSONArray.parseArray(responseStr);
+
+            for (int index = 0; index < jsonArray.size(); index++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(index);
+                if (jsonObject.containsKey("metric")) {
+                    queryResponse.addMetricData(jsonObject.toJavaObject(QueryResponse.MetricData.class));
+                } else if (jsonObject.containsKey("statsSummary")) {
+                    queryResponse.setStatsSummary(jsonObject.getString("statsSummary"));
+                }
+            }
+        } catch (Exception e) {
+            JSONObject jsonObject = JSONObject.parseObject(responseStr).getJSONObject("error");
+
+            queryResponse.setCode(jsonObject.getIntValue("code"));
+            queryResponse.setMessage(jsonObject.getString("message"));
+            queryResponse.setDetails(jsonObject.getString("details"));
+
+            LOGGER.error("jvm error: {}, code: {}, message: {}, details:{}", e.getMessage(),
+                    jsonObject.getIntValue("code"), jsonObject.getString("message"), jsonObject.getString("details"));
+        }
+        return queryResponse;
     }
 }

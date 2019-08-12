@@ -26,11 +26,11 @@ import static com.google.common.base.Preconditions.checkState;
 /**
  * Builder used to create the JSON to push metrics to KairosDB.
  */
-public class MetricBuilder {
+public class DataPointBuilder {
 
-    private List<Metric> metrics = Lists.newArrayList();
+    private List<DataPoint> dataPoints = Lists.newArrayList();
 
-    private MetricBuilder() {
+    private DataPointBuilder() {
     }
 
     /**
@@ -38,8 +38,8 @@ public class MetricBuilder {
      *
      * @return metric builder
      */
-    public static MetricBuilder getInstance() {
-        return new MetricBuilder();
+    public static DataPointBuilder getInstance() {
+        return new DataPointBuilder();
     }
 
     /**
@@ -48,10 +48,10 @@ public class MetricBuilder {
      * @param metricName metric name
      * @return the new metric
      */
-    public Metric addMetric(String metricName) {
-        Metric metric = new Metric(metricName);
-        metrics.add(metric);
-        return metric;
+    public DataPoint addMetric(String metricName) {
+        DataPoint dataPoint = new DataPoint(metricName);
+        dataPoints.add(dataPoint);
+        return dataPoint;
     }
 
     /**
@@ -59,15 +59,15 @@ public class MetricBuilder {
      *
      * @return list of metrics
      */
-    public List<Metric> getMetrics() {
-        return metrics;
+    public List<DataPoint> getDataPoints() {
+        return dataPoints;
     }
 
     public String build() {
-        for (Metric metric : metrics) {
+        for (DataPoint dataPoint : dataPoints) {
             // verify that there is at least one tag for each metric
-            checkState(metric.getTags().size() > 0, metric.getName() + " must contain at least one tag.");
+            checkState(dataPoint.getTags().size() > 0, dataPoint.getMetric() + " must contain at least one tag.");
         }
-        return JSON.toJSONString(metrics, SerializerFeature.IgnoreNonFieldGetter);
+        return JSON.toJSONString(dataPoints, SerializerFeature.IgnoreNonFieldGetter);
     }
 }

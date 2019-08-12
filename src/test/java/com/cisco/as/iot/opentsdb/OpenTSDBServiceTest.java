@@ -1,6 +1,6 @@
 package com.cisco.as.iot.opentsdb;
 
-import com.cisco.as.iot.opentsdb.builder.MetricBuilder;
+import com.cisco.as.iot.opentsdb.builder.DataPointBuilder;
 import com.cisco.as.iot.opentsdb.request.Filter;
 import com.cisco.as.iot.opentsdb.request.QueryBuilder;
 import com.cisco.as.iot.opentsdb.request.SubQueries;
@@ -26,8 +26,8 @@ public class OpenTSDBServiceTest {
 
     @Test
     public void testPushMetrics() {
-        MetricBuilder builder = MetricBuilder.getInstance();
-        builder.addMetric("metric1").setDataPoint(40).addTag("tag1", "tag1v");
+        DataPointBuilder builder = DataPointBuilder.getInstance();
+        builder.addMetric("metric1").value(40).addTag("tag1", "tag1v");
 
         String response = openTSDBService.pushMetrics(builder, ExpectResponse.SUMMARY);
         System.out.println(response);

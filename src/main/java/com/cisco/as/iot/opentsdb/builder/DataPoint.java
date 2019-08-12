@@ -1,6 +1,5 @@
 package com.cisco.as.iot.opentsdb.builder;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,11 +9,10 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Metric {
+public class DataPoint {
 
     // 监控指标项
-    @JSONField(name = "metric")
-    private String name;
+    private String metric;
 
     // 时间戳 [生成时间]
     private long timestamp;
@@ -23,13 +21,13 @@ public class Metric {
     private Object value;
 
     // 标签kv项
-    private Map<String, String> tags = Maps.newConcurrentMap();
+    private Map<String, String> tags = Maps.newHashMap();
 
-    Metric(String name) {
-        if (StringUtils.isBlank(name)) {
+    DataPoint(String metric) {
+        if (StringUtils.isBlank(metric)) {
             throw new IllegalArgumentException("empty metric name");
         }
-        this.name = name;
+        this.metric = metric;
     }
 
     /**
@@ -39,7 +37,7 @@ public class Metric {
      * @param value tag value
      * @return the metric the tag was added to
      */
-    public Metric addTag(String name, String value) {
+    public DataPoint addTag(String name, String value) {
         if (StringUtils.isAnyBlank(name, value)) {
             throw new IllegalArgumentException("empty tag name or value");
         }
@@ -53,7 +51,7 @@ public class Metric {
      * @param tags map of tags
      * @return the metric the tags were added to
      */
-    public Metric addTags(Map<String, String> tags) {
+    public DataPoint addTags(Map<String, String> tags) {
         checkNotNull(tags);
         this.tags.putAll(tags);
         return this;
@@ -66,7 +64,7 @@ public class Metric {
      * @param value     the measurement value
      * @return the metric
      */
-    private Metric innerAddDataPoint(long timestamp, Object value) {
+    private DataPoint innerValue(long timestamp, Object value) {
         checkArgument(timestamp > 0);
         this.timestamp = timestamp;
         this.value = checkNotNull(value);
@@ -79,12 +77,12 @@ public class Metric {
      * @param value the measurement value
      * @return the metric
      */
-    public Metric setDataPoint(long value) {
-        return innerAddDataPoint(System.currentTimeMillis(), value);
+    public DataPoint value(long value) {
+        return innerValue(System.currentTimeMillis(), value);
     }
 
-    public Metric setDataPoint(long timestamp, long value) {
-        return innerAddDataPoint(timestamp, value);
+    public DataPoint value(long timestamp, long value) {
+        return innerValue(timestamp, value);
     }
 
     /**
@@ -94,8 +92,8 @@ public class Metric {
      * @param value     the measurement value
      * @return the metric
      */
-    public Metric setDataPoint(long timestamp, double value) {
-        return innerAddDataPoint(timestamp, value);
+    public DataPoint value(long timestamp, double value) {
+        return innerValue(timestamp, value);
     }
 
     /**
@@ -104,8 +102,8 @@ public class Metric {
      * @param value the measurement value
      * @return the metric
      */
-    public Metric setDataPoint(double value) {
-        return innerAddDataPoint(System.currentTimeMillis(), value);
+    public DataPoint value(double value) {
+        return innerValue(System.currentTimeMillis(), value);
     }
 
     /**
@@ -154,8 +152,8 @@ public class Metric {
      *
      * @return metric name
      */
-    public String getName() {
-        return name;
+    public String getMetric() {
+        return metric;
     }
 
     /**
