@@ -51,7 +51,9 @@ public interface OpenTSDBService {
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
-        return OkHttpUtil.bodyPost(url).body(body).callForString();
+        String responseStr = OkHttpUtil.bodyPost(url).body(body).callForString();
+        LOGGER.debug("response: {}", responseStr);
+        return responseStr;
     }
 
     default String pushQueriesString(QueryBuilder builder, ExpectResponse expectResponse) {
@@ -60,7 +62,9 @@ public interface OpenTSDBService {
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
-        return OkHttpUtil.bodyPost(url).body(body).callForString();
+        String responseStr = OkHttpUtil.bodyPost(url).body(body).callForString();
+        LOGGER.debug("response: {}", responseStr);
+        return responseStr;
     }
 
     default void asyncPushDataPoints(DataPointBuilder builder, ExpectResponse expectResponse, Callback callback) {
