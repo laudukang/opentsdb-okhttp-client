@@ -21,6 +21,7 @@ public class Query {
     private Boolean showQuery = Boolean.FALSE;
     private Boolean showStats = Boolean.FALSE;
     private Boolean delete = Boolean.FALSE;
+    private Object customField;
 
     public Query() {
     }
@@ -82,6 +83,11 @@ public class Query {
 
     public Query delete() {
         this.delete = Boolean.TRUE;
+        return this;
+    }
+
+    public Query customField(Object customField) {
+        this.customField = customField;
         return this;
     }
 
@@ -171,5 +177,13 @@ public class Query {
 
     public void setDelete(Boolean delete) {
         this.delete = delete;
+    }
+
+    public Object getCustomField() {
+        return customField;
+    }
+
+    public void setCustomField(Object customField) {
+        this.customField = customField;
     }
 }
