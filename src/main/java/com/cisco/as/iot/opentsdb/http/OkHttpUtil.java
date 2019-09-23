@@ -70,10 +70,10 @@ public class OkHttpUtil {
             .hostnameVerifier((hostname, session) -> true)//fix SSLPeerUnverifiedException
             .retryOnConnectionFailure(false)
             .connectionPool(pool())
-//            .addInterceptor(new RetryInterceptor.Builder().executionCount(3).build())
+            .addInterceptor(new RetryInterceptor.Builder().executionCount(3).retryInterval(1000).build())
             .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
             .build();
 
     private static SSLSocketFactory sslSocketFactory() {
