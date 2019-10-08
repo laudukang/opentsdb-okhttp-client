@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.builder;
+package me.codz.opentsdb.builder;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;

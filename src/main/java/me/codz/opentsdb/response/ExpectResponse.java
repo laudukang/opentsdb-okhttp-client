@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.response;
+package me.codz.opentsdb.response;
 
 public enum ExpectResponse {
 

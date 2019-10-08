@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cisco.as.iot.opentsdb</groupId>
+    <groupId>me.codz.opentsdb</groupId>
     <artifactId>opentsdb-client</artifactId>
     <version>1.0.0-RELEASE</version>
     <packaging>jar</packaging>
 
-    <name>opentsdbclient</name>
+    <name>OpenTSDB Java Async Client</name>
     <description>Java client for pushing and querying data for OpenTSDB</description>
     <url>http://opentsdb.org</url>
 

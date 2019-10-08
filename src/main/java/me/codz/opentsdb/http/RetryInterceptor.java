@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.http;
+package me.codz.opentsdb.http;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;

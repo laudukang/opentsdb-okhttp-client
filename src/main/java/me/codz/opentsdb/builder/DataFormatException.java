@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.builder;
+package me.codz.opentsdb.builder;
 
 public class DataFormatException extends Exception {
 

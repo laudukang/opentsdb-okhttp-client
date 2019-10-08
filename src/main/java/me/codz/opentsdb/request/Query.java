@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.request;
+package me.codz.opentsdb.request;
 
 import java.util.ArrayList;
 import java.util.List;

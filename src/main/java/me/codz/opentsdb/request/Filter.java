@@ -1,6 +1,6 @@
-package com.cisco.as.iot.opentsdb.request;
+package me.codz.opentsdb.request;
 
-import com.cisco.as.iot.opentsdb.utils.FilterTypeEnum;
+import me.codz.opentsdb.utils.FilterTypeEnum;
 
 /**
  * Created by shifeng on 2016/5/19.

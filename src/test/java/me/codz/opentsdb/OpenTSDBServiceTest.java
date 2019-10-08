@@ -1,13 +1,13 @@
-package com.cisco.as.iot.opentsdb;
+package me.codz.opentsdb;
 
-import com.cisco.as.iot.opentsdb.builder.DataPointBuilder;
-import com.cisco.as.iot.opentsdb.request.Filter;
-import com.cisco.as.iot.opentsdb.request.QueryBuilder;
-import com.cisco.as.iot.opentsdb.request.SubQueries;
-import com.cisco.as.iot.opentsdb.response.ExpectResponse;
-import com.cisco.as.iot.opentsdb.service.OpenTSDBService;
-import com.cisco.as.iot.opentsdb.utils.AggregatorEnum;
-import com.cisco.as.iot.opentsdb.utils.FilterTypeEnum;
+import me.codz.opentsdb.builder.DataPointBuilder;
+import me.codz.opentsdb.request.Filter;
+import me.codz.opentsdb.request.QueryBuilder;
+import me.codz.opentsdb.request.SubQueries;
+import me.codz.opentsdb.response.ExpectResponse;
+import me.codz.opentsdb.service.OpenTSDBService;
+import me.codz.opentsdb.utils.AggregatorEnum;
+import me.codz.opentsdb.utils.FilterTypeEnum;
 import org.junit.Before;
 import org.junit.Test;
 

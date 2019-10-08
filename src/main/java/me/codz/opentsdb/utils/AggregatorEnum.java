@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.utils;
+package me.codz.opentsdb.utils;
 
 /**
  * <p>Created with IDEA

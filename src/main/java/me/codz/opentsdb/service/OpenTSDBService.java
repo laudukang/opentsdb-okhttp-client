@@ -1,12 +1,12 @@
-package com.cisco.as.iot.opentsdb.service;
+package me.codz.opentsdb.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.cisco.as.iot.opentsdb.builder.DataPointBuilder;
-import com.cisco.as.iot.opentsdb.http.OkHttpUtil;
-import com.cisco.as.iot.opentsdb.request.QueryBuilder;
-import com.cisco.as.iot.opentsdb.response.ExpectResponse;
-import com.cisco.as.iot.opentsdb.response.QueryResponse;
+import me.codz.opentsdb.builder.DataPointBuilder;
+import me.codz.opentsdb.http.OkHttpUtil;
+import me.codz.opentsdb.request.QueryBuilder;
+import me.codz.opentsdb.response.ExpectResponse;
+import me.codz.opentsdb.response.QueryResponse;
 import okhttp3.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

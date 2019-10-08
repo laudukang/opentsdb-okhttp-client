@@ -1,6 +1,6 @@
-package com.cisco.as.iot.opentsdb.request;
+package me.codz.opentsdb.request;
 
-import com.cisco.as.iot.opentsdb.utils.AggregatorEnum;
+import me.codz.opentsdb.utils.AggregatorEnum;
 
 import java.util.ArrayList;
 import java.util.List;

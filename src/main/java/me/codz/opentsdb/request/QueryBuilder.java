@@ -1,4 +1,4 @@
-package com.cisco.as.iot.opentsdb.request;
+package me.codz.opentsdb.request;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
