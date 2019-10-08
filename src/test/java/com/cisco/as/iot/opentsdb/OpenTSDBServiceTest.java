@@ -19,7 +19,7 @@ public class OpenTSDBServiceTest {
 
     @Before
     public void init() {
-        String openTSDBServer = "http://n2:4242";
+        String openTSDBServer = "http://localhost:4242";
 
         openTSDBService = () -> openTSDBServer;
     }
