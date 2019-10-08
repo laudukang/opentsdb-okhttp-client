@@ -8,9 +8,13 @@ import me.codz.opentsdb.response.ExpectResponse;
 import me.codz.opentsdb.service.OpenTSDBService;
 import me.codz.opentsdb.utils.AggregatorEnum;
 import me.codz.opentsdb.utils.FilterTypeEnum;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class OpenTSDBServiceTest {
@@ -50,5 +54,25 @@ public class OpenTSDBServiceTest {
 
         String response = openTSDBService.pushQueriesString(builder, ExpectResponse.SUMMARY);
         System.out.println(response);
+    }
+
+    @Test
+    public void testAsyncPushMetrics() {
+        DataPointBuilder builder = DataPointBuilder.getInstance();
+        builder.addMetric("metric1").value(40).addTag("tag1", "tag1v");
+
+        Callback callback = new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println(response.body().string());
+            }
+        };
+
+        openTSDBService.asyncPushDataPoints(builder, ExpectResponse.SUMMARY, callback);
     }
 }
