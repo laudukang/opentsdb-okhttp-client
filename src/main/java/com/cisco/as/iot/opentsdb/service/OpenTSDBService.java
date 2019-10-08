@@ -11,6 +11,9 @@ import okhttp3.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -51,8 +54,10 @@ public interface OpenTSDBService {
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
+        LocalDateTime start = LocalDateTime.now();
         String responseStr = OkHttpUtil.bodyPost(url).body(body).callForString();
-        LOGGER.debug("response: {}", responseStr);
+
+        LOGGER.debug("cost: {} mills, response: {}", Duration.between(start, LocalDateTime.now()).toMillis(), responseStr);
         return responseStr;
     }
 
@@ -62,8 +67,10 @@ public interface OpenTSDBService {
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
+        LocalDateTime start = LocalDateTime.now();
         String responseStr = OkHttpUtil.bodyPost(url).body(body).callForString();
-        LOGGER.debug("response: {}", responseStr);
+
+        LOGGER.debug("cost: {} mills, response: {}", Duration.between(start, LocalDateTime.now()).toMillis(), responseStr);
         return responseStr;
     }
 
