@@ -2,9 +2,22 @@
 
 1. replace gson by fastjson
 
-2. using OkHttp3, support query retry base `RetryInterceptor`
+2. using OkHttp3, support query retry by custom `RetryInterceptor`, configuration example:
 
-3. default method provide in `OpenTSDBService`:
+```java
+    private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
+            .sslSocketFactory(sslSocketFactory(), x509TrustManager())//fix SSLHandshakeException
+            .hostnameVerifier((hostname, session) -> true)//fix SSLPeerUnverifiedException
+            .retryOnConnectionFailure(false)
+            .connectionPool(pool())
+            .addInterceptor(new RetryInterceptor.Builder().executionCount(3).retryInterval(1000).build())
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
+            .build();
+```
+
+3. default method provided in `OpenTSDBService`:
 
     - default String buildUrl(String serviceUrl, String postApiEndPoint, ExpectResponse expectResponse)
     
@@ -18,17 +31,17 @@
     
 4. Spring Boot init `OpenTSDBService` example:
 
-    ```java
-        @Bean
-        public OpenTSDBService openTSDBService() {
-            String openTSDBServer = configProperties.getOpentsdbServer();
-            if (StringUtils.isBlank(openTSDBServer)) {
-                throw new IllegalArgumentException("empty opentsdb server url");
-            }
-    
-            return () -> openTSDBServer;
+```java
+    @Bean
+    public OpenTSDBService openTSDBService() {
+        String openTSDBServer = configProperties.getOpentsdbServer();
+        if (StringUtils.isBlank(openTSDBServer)) {
+            throw new IllegalArgumentException("empty opentsdb server url");
         }
-    ```
+
+        return () -> openTSDBServer;
+    }
+```
 
 
 Reference:
