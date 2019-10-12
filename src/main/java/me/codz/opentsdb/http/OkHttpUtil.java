@@ -65,7 +65,7 @@ public class OkHttpUtil {
 
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
+    private static final OkHttpClient DEFAULT_CLIENT = new OkHttpClient.Builder()
             .sslSocketFactory(sslSocketFactory(), x509TrustManager())//fix SSLHandshakeException
             .hostnameVerifier((hostname, session) -> true)//fix SSLPeerUnverifiedException
             .retryOnConnectionFailure(false)
@@ -75,6 +75,8 @@ public class OkHttpUtil {
             .readTimeout(1, TimeUnit.MINUTES)
             .writeTimeout(1, TimeUnit.MINUTES)
             .build();
+
+    private static OkHttpClient CUSTOM_CLIENT;
 
     private static SSLSocketFactory sslSocketFactory() {
         try {
@@ -427,7 +429,7 @@ public class OkHttpUtil {
      */
     public static void callSuccess(Request request) {
         try {
-            Response response = CLIENT.newCall(request).execute();
+            Response response = getOkHttpClient().newCall(request).execute();
             response.close(); // 内部静默关闭
             if (!response.isSuccessful()) {
                 throw new RuntimeException("Request Failure, Code: "
@@ -443,7 +445,7 @@ public class OkHttpUtil {
      */
     public static Response callForResponse(Request request) {
         try {
-            return CLIENT.newCall(request).execute();
+            return getOkHttpClient().newCall(request).execute();
         } catch (IOException e) {
             throw new RuntimeException("Request IOException", e);
         }
@@ -454,7 +456,7 @@ public class OkHttpUtil {
      */
     public static String callForString(Request request) {
         try {
-            Response response = CLIENT.newCall(request).execute();
+            Response response = getOkHttpClient().newCall(request).execute();
             String result = response.body().string();
             response.close(); // 内部静默关闭
             return result;
@@ -468,7 +470,7 @@ public class OkHttpUtil {
      */
     public static byte[] callForBytes(Request request) {
         try {
-            Response response = CLIENT.newCall(request).execute();
+            Response response = getOkHttpClient().newCall(request).execute();
             byte[] result = response.body().bytes();
             response.close(); // 内部静默关闭
             return result;
@@ -496,7 +498,7 @@ public class OkHttpUtil {
      * 执行Request请求并在完成时执行回调方法。
      */
     public static void callback(Request request, Callback callback) {
-        CLIENT.newCall(request).enqueue(callback);
+        getOkHttpClient().newCall(request).enqueue(callback);
     }
 
     public static int cancelCallWithTag(Object tagObject) {
@@ -506,7 +508,7 @@ public class OkHttpUtil {
             return cancelNum;
         }
 
-        for (Call call : CLIENT.dispatcher().queuedCalls()) {
+        for (Call call : getOkHttpClient().dispatcher().queuedCalls()) {
             Object tag = call.request().tag();
             if (Objects.nonNull(tag) && tag.equals(tagObject)) {
                 call.cancel();
@@ -514,7 +516,7 @@ public class OkHttpUtil {
             }
         }
 
-        for (Call call : CLIENT.dispatcher().runningCalls()) {
+        for (Call call : getOkHttpClient().dispatcher().runningCalls()) {
             Object tag = call.request().tag();
             if (Objects.nonNull(tag) && tag.equals(tagObject)) {
                 call.cancel();
@@ -525,7 +527,11 @@ public class OkHttpUtil {
         return cancelNum;
     }
 
-    public static OkHttpClient getClient() {
-        return CLIENT;
+    public static void setCustomClient(OkHttpClient customClient) {
+        CUSTOM_CLIENT = customClient;
+    }
+
+    private static OkHttpClient getOkHttpClient() {
+        return Objects.nonNull(CUSTOM_CLIENT) ? CUSTOM_CLIENT : DEFAULT_CLIENT;
     }
 }
