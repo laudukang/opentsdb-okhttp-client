@@ -11,6 +11,7 @@ import okhttp3.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -23,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * <p>Time: 20:46
  * <p>Version: 1.0
  */
-public interface OpenTSDBService {
+public interface OpenTSDBService extends Serializable {
     Logger LOGGER = LoggerFactory.getLogger(OpenTSDBService.class);
 
     String PUT_POST_API = "/api/put";
