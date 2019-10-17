@@ -1,6 +1,8 @@
 package me.codz.opentsdb.builder;
 
 import com.google.common.collect.Maps;
+import me.codz.opentsdb.utils.AggregatorEnum;
+import me.codz.opentsdb.utils.IntervalEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
@@ -23,11 +25,11 @@ public class DataPoint {
     // 标签kv项
     private Map<String, String> tags = Maps.newHashMap();
 
-    private String interval;
+    private IntervalEnum interval;
 
-    private String aggregator;
+    private AggregatorEnum aggregator;
 
-    private String groupByAggregator;
+    private AggregatorEnum groupByAggregator;
 
     DataPoint(String metric) {
         if (StringUtils.isBlank(metric)) {
@@ -112,27 +114,18 @@ public class DataPoint {
         return innerValue(System.currentTimeMillis(), value);
     }
 
-    public DataPoint interval(String interval) {
-        if (StringUtils.isBlank(interval)) {
-            throw new IllegalArgumentException("empty interval");
-        }
-        this.interval = interval;
+    public DataPoint interval(IntervalEnum intervalEnum) {
+        this.interval = intervalEnum;
         return this;
     }
 
-    public DataPoint aggregator(String aggregator) {
-        if (StringUtils.isBlank(aggregator)) {
-            throw new IllegalArgumentException("empty aggregator");
-        }
-        this.aggregator = aggregator;
+    public DataPoint aggregator(AggregatorEnum aggregatorEnum) {
+        this.aggregator = aggregatorEnum;
         return this;
     }
 
-    public DataPoint groupByAggregator(String groupByAggregator) {
-        if (StringUtils.isBlank(groupByAggregator)) {
-            throw new IllegalArgumentException("empty groupByAggregator");
-        }
-        this.groupByAggregator = groupByAggregator;
+    public DataPoint groupByAggregator(AggregatorEnum aggregatorEnum) {
+        this.groupByAggregator = aggregatorEnum;
         return this;
     }
 
@@ -195,15 +188,15 @@ public class DataPoint {
         return Collections.unmodifiableMap(tags);
     }
 
-    public String getInterval() {
+    public IntervalEnum getInterval() {
         return interval;
     }
 
-    public String getAggregator() {
+    public AggregatorEnum getAggregator() {
         return aggregator;
     }
 
-    public String getGroupByAggregator() {
+    public AggregatorEnum getGroupByAggregator() {
         return groupByAggregator;
     }
 }

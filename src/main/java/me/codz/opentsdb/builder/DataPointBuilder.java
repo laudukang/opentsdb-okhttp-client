@@ -68,6 +68,6 @@ public class DataPointBuilder {
             // verify that there is at least one tag for each metric
             checkState(dataPoint.getTags().size() > 0, dataPoint.getMetric() + " must contain at least one tag.");
         }
-        return JSON.toJSONString(dataPoints, SerializerFeature.IgnoreNonFieldGetter);
+        return JSON.toJSONString(dataPoints, SerializerFeature.IgnoreNonFieldGetter, SerializerFeature.WriteEnumUsingToString);
     }
 }
