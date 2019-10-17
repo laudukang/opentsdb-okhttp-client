@@ -31,6 +31,8 @@ public interface OpenTSDBService extends Serializable {
 
     String QUERY_POST_API = "/api/query";
 
+    String ROLLUP_POST_API = "/api/rollup";
+
     String getOpenTSDBServer();
 
     default String buildUrl(String serviceUrl, String postApiEndPoint, ExpectResponse expectResponse) {
@@ -49,8 +51,23 @@ public interface OpenTSDBService extends Serializable {
         return urlBuilder.toString();
     }
 
+    default String pushRollupDataPointsString(DataPointBuilder builder, ExpectResponse expectResponse) {
+        checkNotNull(builder);
+
+        String url = buildUrl(this.getOpenTSDBServer(), ROLLUP_POST_API, expectResponse);
+        String body = builder.build();
+        LOGGER.debug("post: {} body: {}", url, body);
+
+        LocalDateTime start = LocalDateTime.now();
+        String responseStr = OkHttpUtil.bodyPost(url).body(body).callForString();
+
+        LOGGER.debug("cost: {} mills, response: {}", Duration.between(start, LocalDateTime.now()).toMillis(), responseStr);
+        return responseStr;
+    }
+
     default String pushDataPointsString(DataPointBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
+
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
@@ -64,6 +81,7 @@ public interface OpenTSDBService extends Serializable {
 
     default String pushQueriesString(QueryBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
+
         String url = buildUrl(this.getOpenTSDBServer(), QUERY_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
@@ -77,6 +95,7 @@ public interface OpenTSDBService extends Serializable {
 
     default void asyncPushDataPoints(DataPointBuilder builder, ExpectResponse expectResponse, Callback callback) {
         checkNotNull(builder);
+
         String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);

@@ -23,6 +23,12 @@ public class DataPoint {
     // 标签kv项
     private Map<String, String> tags = Maps.newHashMap();
 
+    private String interval;
+
+    private String aggregator;
+
+    private String groupByAggregator;
+
     DataPoint(String metric) {
         if (StringUtils.isBlank(metric)) {
             throw new IllegalArgumentException("empty metric name");
@@ -106,6 +112,30 @@ public class DataPoint {
         return innerValue(System.currentTimeMillis(), value);
     }
 
+    public DataPoint interval(String interval) {
+        if (StringUtils.isBlank(interval)) {
+            throw new IllegalArgumentException("empty interval");
+        }
+        this.interval = interval;
+        return this;
+    }
+
+    public DataPoint aggregator(String aggregator) {
+        if (StringUtils.isBlank(aggregator)) {
+            throw new IllegalArgumentException("empty aggregator");
+        }
+        this.aggregator = aggregator;
+        return this;
+    }
+
+    public DataPoint groupByAggregator(String groupByAggregator) {
+        if (StringUtils.isBlank(groupByAggregator)) {
+            throw new IllegalArgumentException("empty groupByAggregator");
+        }
+        this.groupByAggregator = groupByAggregator;
+        return this;
+    }
+
     /**
      * Time when the data point was measured.
      *
@@ -119,7 +149,7 @@ public class DataPoint {
         return value;
     }
 
-    public String stringValue()  {
+    public String stringValue() {
         return value.toString();
     }
 
@@ -163,5 +193,17 @@ public class DataPoint {
      */
     public Map<String, String> getTags() {
         return Collections.unmodifiableMap(tags);
+    }
+
+    public String getInterval() {
+        return interval;
+    }
+
+    public String getAggregator() {
+        return aggregator;
+    }
+
+    public String getGroupByAggregator() {
+        return groupByAggregator;
     }
 }
