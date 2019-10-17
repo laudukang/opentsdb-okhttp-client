@@ -43,7 +43,7 @@ public class RetryInterceptor implements Interceptor {
             final long nextInterval = Objects.nonNull(retryInterval) ? retryInterval : getRetryInterval(retryNum);
             retryNum++;
 
-            LOGGER.info("intercept Request is not successful - request: {}, try count: {}, sleep {} mills", request, retryNum, nextInterval);
+            LOGGER.debug("intercept Request is not successful - request: {}, try count: {}, sleep {} mills", request, retryNum, nextInterval);
 
             try {
                 Thread.sleep(nextInterval);
