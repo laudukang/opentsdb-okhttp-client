@@ -55,6 +55,7 @@ public class RetryInterceptor implements Interceptor {
 
             // retry the request
             try {
+                response.close();
                 response = chain.proceed(request);
             } catch (IOException e) {
                 if (retryNum >= executionCount) {
