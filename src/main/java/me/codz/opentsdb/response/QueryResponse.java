@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>Created with IDEA
@@ -156,6 +157,14 @@ public class QueryResponse {
 
         public void setQuery(String query) {
             this.query = query;
+        }
+
+        public long dpsSum() {
+            if (Objects.isNull(dps) || dps.isEmpty()) {
+                return 0;
+            }
+
+            return dps.values().stream().mapToLong(v -> v).sum();
         }
     }
 
