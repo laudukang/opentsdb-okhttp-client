@@ -21,6 +21,8 @@ public class Query {
     private Boolean showQuery = Boolean.FALSE;
     private Boolean showStats = Boolean.FALSE;
     private Boolean delete = Boolean.FALSE;
+    private String timezone = "UTC";
+    private Boolean useCalendar = Boolean.FALSE;
     private Object customField;
 
     public Query() {
@@ -88,6 +90,16 @@ public class Query {
 
     public Query customField(Object customField) {
         this.customField = customField;
+        return this;
+    }
+
+    public Query timezone(String timezone) {
+        this.timezone = timezone;
+        return this;
+    }
+
+    public Query useCalendar(Boolean useCalendar) {
+        this.useCalendar = useCalendar;
         return this;
     }
 
@@ -185,5 +197,21 @@ public class Query {
 
     public void setCustomField(Object customField) {
         this.customField = customField;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
+
+    public Boolean getUseCalendar() {
+        return useCalendar;
+    }
+
+    public void setUseCalendar(Boolean useCalendar) {
+        this.useCalendar = useCalendar;
     }
 }
