@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
 
 public class OpenTSDBServiceTest {
@@ -25,7 +26,7 @@ public class OpenTSDBServiceTest {
     public void init() {
         String openTSDBServer = "http://localhost:4242";
 
-        openTSDBService = () -> openTSDBServer;
+        openTSDBService = () -> Collections.singletonList(openTSDBServer);
     }
 
     @Test

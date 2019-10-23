@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,11 +36,25 @@ public interface OpenTSDBService extends Serializable {
 
     String ROLLUP_POST_API = "/api/rollup";
 
-    String getOpenTSDBServer();
+    List<String> getOpenTSDBServer();
 
-    default String buildUrl(String serviceUrl, String postApiEndPoint, ExpectResponse expectResponse) {
+    default String serverSelector() {
+        if (Objects.isNull(this.getOpenTSDBServer()) || this.getOpenTSDBServer().size() <= 0) {
+            throw new IllegalArgumentException("empty opentsdb server url");
+        }
+
+        if (this.getOpenTSDBServer().size() == 1) {
+            return this.getOpenTSDBServer().get(0);
+        }
+
+        int index = ThreadLocalRandom.current().nextInt(0, this.getOpenTSDBServer().size());
+        return this.getOpenTSDBServer().get(index);
+    }
+
+    default String buildUrl(String postApiEndPoint, ExpectResponse expectResponse) {
         StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(serviceUrl).append(postApiEndPoint);
+        urlBuilder.append(serverSelector()).append(postApiEndPoint);
+
         switch (expectResponse) {
             case SUMMARY:
                 urlBuilder.append("?summary");
@@ -54,7 +71,7 @@ public interface OpenTSDBService extends Serializable {
     default String pushRollupDataPointsString(DataPointBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
 
-        String url = buildUrl(this.getOpenTSDBServer(), ROLLUP_POST_API, expectResponse);
+        String url = buildUrl(ROLLUP_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
@@ -68,7 +85,7 @@ public interface OpenTSDBService extends Serializable {
     default String pushDataPointsString(DataPointBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
 
-        String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
+        String url = buildUrl(PUT_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
@@ -82,7 +99,7 @@ public interface OpenTSDBService extends Serializable {
     default String pushQueriesString(QueryBuilder builder, ExpectResponse expectResponse) {
         checkNotNull(builder);
 
-        String url = buildUrl(this.getOpenTSDBServer(), QUERY_POST_API, expectResponse);
+        String url = buildUrl(QUERY_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
@@ -96,7 +113,7 @@ public interface OpenTSDBService extends Serializable {
     default void asyncPushDataPoints(DataPointBuilder builder, ExpectResponse expectResponse, Callback callback) {
         checkNotNull(builder);
 
-        String url = buildUrl(this.getOpenTSDBServer(), PUT_POST_API, expectResponse);
+        String url = buildUrl(PUT_POST_API, expectResponse);
         String body = builder.build();
         LOGGER.debug("post: {} body: {}", url, body);
 
