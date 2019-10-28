@@ -136,4 +136,20 @@ public class SubQueries {
     public void setFilters(List<Filter> filters) {
         this.filters = filters;
     }
+
+    public RollupUsageEnum getRollupUsage() {
+        return rollupUsage;
+    }
+
+    public void setRollupUsage(RollupUsageEnum rollupUsage) {
+        this.rollupUsage = rollupUsage;
+    }
+
+    public Boolean getPreAggregate() {
+        return preAggregate;
+    }
+
+    public void setPreAggregate(Boolean preAggregate) {
+        this.preAggregate = preAggregate;
+    }
 }
