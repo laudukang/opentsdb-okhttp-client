@@ -1,6 +1,7 @@
 package me.codz.opentsdb.request;
 
 import me.codz.opentsdb.utils.AggregatorEnum;
+import me.codz.opentsdb.utils.RollupUsageEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class SubQueries {
     private Map<String, String> rateOptions;
     private String downsample;
     private List<Filter> filters = new ArrayList<>();
+    private RollupUsageEnum rollupUsage;
+    private Boolean preAggregate = Boolean.FALSE;
 
     public SubQueries addAggregator(AggregatorEnum aggregator) {
         this.aggregator = aggregator;
@@ -57,6 +60,16 @@ public class SubQueries {
 
     public SubQueries useMultiGets() {
         this.useMultiGets = Boolean.TRUE;
+        return this;
+    }
+
+    public SubQueries rollupUsage(RollupUsageEnum rollupUsage) {
+        this.rollupUsage = rollupUsage;
+        return this;
+    }
+
+    public SubQueries preAggregate(Boolean preAggregate) {
+        this.preAggregate = preAggregate;
         return this;
     }
 
