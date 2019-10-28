@@ -34,12 +34,12 @@
 ```java
     @Bean
     public OpenTSDBService openTSDBService() {
-        String openTSDBServer = configProperties.getOpentsdbServer();
-        if (StringUtils.isBlank(openTSDBServer)) {
+        List<String> openTSDBServerList = configProperties.getOpentsdbServer();
+        if (CollectionUtils.isEmpty(openTSDBServerList)) {
             throw new IllegalArgumentException("empty opentsdb server url");
         }
 
-        return () -> openTSDBServer;
+        return () -> openTSDBServerList;
     }
 ```
 
