@@ -24,6 +24,7 @@ public class Query {
     private String timezone = "UTC";
     private Boolean useCalendar = Boolean.FALSE;
     private Object customField;
+    private long limit;
 
     public Query() {
     }
@@ -100,6 +101,11 @@ public class Query {
 
     public Query useCalendar(Boolean useCalendar) {
         this.useCalendar = useCalendar;
+        return this;
+    }
+
+    public Query limit(long limit) {
+        this.limit = limit;
         return this;
     }
 
@@ -213,5 +219,13 @@ public class Query {
 
     public void setUseCalendar(Boolean useCalendar) {
         this.useCalendar = useCalendar;
+    }
+
+    public long getLimit() {
+        return limit;
+    }
+
+    public void setLimit(long limit) {
+        this.limit = limit;
     }
 }
