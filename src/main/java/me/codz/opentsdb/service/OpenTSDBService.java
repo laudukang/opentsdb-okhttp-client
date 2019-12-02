@@ -141,7 +141,7 @@ public interface OpenTSDBService extends Serializable {
             queryResponse.setMessage(jsonObject.getString("message"));
             queryResponse.setDetails(jsonObject.getString("details"));
 
-            LOGGER.error("jvm error: {}, code: {}, message: {}, details:{}", e.getMessage(),
+            LOGGER.debug("jvm error: {}, code: {}, message: {}, details:{}", e.getMessage(),
                     jsonObject.getIntValue("code"), jsonObject.getString("message"), jsonObject.getString("details"));
         }
         return queryResponse;
