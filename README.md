@@ -33,7 +33,7 @@
     default QueryResponse pushQueries(QueryBuilder builder, ExpectResponse expectResponse)
     ```
 
-## Spring Boot init `OpenTSDBService` example:
+## Spring Boot init `OpenTSDBService` example
 
 ```java
     @Bean
