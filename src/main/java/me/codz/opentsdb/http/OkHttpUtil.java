@@ -78,7 +78,7 @@ public class OkHttpUtil {
 
     private static OkHttpClient CUSTOM_CLIENT;
 
-    private static SSLSocketFactory sslSocketFactory() {
+    public static SSLSocketFactory sslSocketFactory() {
         try {
             //信任任何链接
             SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -92,7 +92,7 @@ public class OkHttpUtil {
     /**
      * 信任任何证书的凭证管理器。
      */
-    private static X509TrustManager x509TrustManager() {
+    public static X509TrustManager x509TrustManager() {
         return new X509TrustManager() {
             @Override
             public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
@@ -109,7 +109,7 @@ public class OkHttpUtil {
         };
     }
 
-    private static ConnectionPool pool() {
+    public static ConnectionPool pool() {
         return new ConnectionPool(200, 10, TimeUnit.MINUTES);
     }
 
