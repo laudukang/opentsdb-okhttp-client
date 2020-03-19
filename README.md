@@ -49,6 +49,8 @@
 
 ## Reference
 
+- [OpenTSDB 查询优化](https://codz.me/2019/11/20/opentsdb-query-optimization/)
+
 - [OkHttpUtils.java](https://github.com/EwingTsai/spring-boot-faster/blob/master/common/src/main/java/ewing/common/utils/OkHttpUtils.java)
 
 - [yangwn/opentsdb-okhttp-client](https://github.com/yangwn/opentsdb-okhttp-client)
